@@ -6,32 +6,18 @@ import s from './Modal.module.css';
 const modalRoot = document.querySelector('#modal');
 
 const Modal = ({ onClose, modalImg, tags }) => {
-  // useEffect(() => {
-  //   window.addEventListener('keydown', e => {
-  //   if (e.code === 'Escape') {
-  //     console.log('modalClose')
-  //     onClose();
-  //   }
-  // })
-  // }, [onClose]);
-
-  const modalClose = e => {
-    if (e.code === 'Escape') {
-      console.log('modalClose');
-      onClose();
-    }
-  };
-  //   componentDidMount() {
-  window.addEventListener('keydown', modalClose);
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('keydown', this.modalClose);
-  // }
+  useEffect(() => {
+    const modalClose = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', modalClose);
+    return () => window.removeEventListener('keydown', modalClose);
+  });
 
   const handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
-      console.log('handleBackdropClick');
       onClose();
     }
   };
